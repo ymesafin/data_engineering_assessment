@@ -19,7 +19,11 @@ query or group of queries that return the patient name, and their most recent ri
 Any patients that dont have a risk level should also be included in the results. 
 
 **********************/
-
+SELECT PersonName, Risk.Risklevel, Risk.RiskDateTime
+from Person
+Left Join Risk on Person.PersonID = Risk.PersonID
+ORDER BY RiskDateTime Desc
+;
 
 
 
@@ -46,6 +50,10 @@ Write a query to return risk data for all patients, all payers
 and a moving average of risk for that patient and payer in dbo.Risk. 
 
 **********************/
+
+SELECT *, Avg(RiskScore) as Average_Risk_Score
+FROM Risk
+GROUP BY PersonID;
 
 
 
