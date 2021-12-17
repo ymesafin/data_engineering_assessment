@@ -21,17 +21,30 @@ same type delivered later on with different file dates and from different groups
 
     #converted to csv
     df = pd.read_csv('demo_Quart.csv')
+    
+    demographics = (df.loc[:, df.columns != 'Quarters' and df.columns != 'Risk Data']
+    print(demographics)
+    
+      if conn.is_connected():
+            print('Connected to MySQL database')
+            
+            cursor = conn.cursor()
 
-    #print(df.loc[:, df.columns != 'Quarters' and df.columns != 'Risk Data'])
+            cursor.execute("CREATE DATABASE 'priviafamilymed')
+    
 
    
                                 
     b. Define the sql schema as necessary. Fields should not include spaces or special characters.
     
-    conn = mysql.connector.connect(host='localhost',
-                                       database='priviafamilymed',
-                                       user='root',
-                                       password='root')
+
+    
+     if conn.is_connected():
+            print('Connected to MySQL database')
+            
+            cursor = conn.cursor()
+
+            cursor.execute("CREATE DATABASE 'priviafamilymed')
     
     c. Include fields in the data table that indicate the date of the file and the provider group located in the filename.
         In this case "Privia Family Medicine" 11/30/2018. Assume the length of the group name will change and the date
@@ -102,4 +115,140 @@ same type delivered later on with different file dates and from different groups
         v. File date
      b. Only include records in which the patients risk has increased.
 3. Include Unit Tests 
+
+
+Test #1 
+import pandas as pd
+import mysql.connector
+from mysql.connector import Error
+
+
+
+def connect():
+
+    conn = None  #this will be the default 
+
+    df = pd.read_csv('demo_Quart.csv')
+
+    #print(df)
+
+    try:
+        conn = mysql.connector.connect(host='localhost',
+                                       database='priviafamilymed',
+                                       user='root',
+                                       password='root')
+
+
+        
+        if conn.is_connected():
+            print('Connected to MySQL database')
+            
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT Middle Name from demo_quart where Middle name")
+            #df.to_sql('demo_quart', conn, if_exists= 'replace', index = False)
+            myrow = cursor.fetchone()
+
+            while myrow is not None: 
+                print(myrow)
+                myrow = cursor.fetchone()
+
+
+
+            '''#this is my code to query my friends info 
+            cursor = conn.cursor()
+            cursor.execute("SELECT * from demo_quart WHERE FIRST NAME = 'MYRL';")
+            myrow = cursor.fetchone()
+
+            print(myrow)
+
+            '''
+            
+            '''
+            while myrow is not None: 
+                print(myrow)
+                myrow = cursor.fetchone()
+
+            '''
+
+    except Error as e:
+        print(e)
+
+
+    finally:
+        if conn is not None and conn.is_connected():
+            conn.close()
+
+if __name__ == '__main__':
+    connect()
+
+
+SECOND TEST 
+
+import pandas as pd
+import mysql.connector
+from mysql.connector import Error
+
+
+
+def connect():
+
+    conn = None  #this will be the default 
+
+    df = pd.read_csv('demo_Quart.csv')
+
+    #print(df)
+
+    try:
+        conn = mysql.connector.connect(host='localhost',
+                                       database='priviafamilymed',
+                                       user='root',
+                                       password='root')
+
+
+        
+        if conn.is_connected():
+            print('Connected to MySQL database')
+            
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT Middle Name from demo_quart where Middle name")
+            #df.to_sql('demo_quart', conn, if_exists= 'replace', index = False)
+            myrow = cursor.fetchone()
+
+            while myrow is not None: 
+                print(myrow)
+                myrow = cursor.fetchone()
+
+
+
+            '''#this is my code to query my friends info 
+            cursor = conn.cursor()
+            cursor.execute("SELECT * from demo_quart WHERE LAST NAME = 'CHIN';")
+            myrow = cursor.fetchone()
+
+            print(myrow)
+
+            '''
+            
+            '''
+            while myrow is not None: 
+                print(myrow)
+                myrow = cursor.fetchone()
+
+            '''
+
+    except Error as e:
+        print(e)
+
+
+    finally:
+        if conn is not None and conn.is_connected():
+            conn.close()
+
+if __name__ == '__main__':
+    connect()
+
+
+
 4. Provide all necessary information for the team to get this up and running.
