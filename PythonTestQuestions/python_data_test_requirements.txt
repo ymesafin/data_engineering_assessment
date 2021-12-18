@@ -37,18 +37,83 @@ same type delivered later on with different file dates and from different groups
 
     b. Define the sql schema as necessary. Fields should not include spaces or special characters.
 
+        ###already created a database through workbench
 
-
-     if conn.is_connected():
-            print('Connected to MySQL database')
+        ##In python, creating a database is shown below: 
+        
+        try:
+            conn = mysql.connector.connect(host='localhost', 
+                                       user='root',
+                                       password='root')
 
             cursor = conn.cursor()
-
             cursor.execute("CREATE DATABASE 'priviafamilymed')
+            
+            
 
     c. Include fields in the data table that indicate the date of the file and the provider group located in the filename.
         In this case "Privia Family Medicine" 11/30/2018. Assume the length of the group name will change and the date
         will always be formatted at the end of the file as MMDDYY
+        
+         
+         
+         if conn.is_connected():
+            print('Connected to MySQL database')
+
+            cursor = conn.cursor()
+            
+            #adding date of file
+            
+            cursor.execute("ALTER TABLE demo_quart
+            ADD DOF DATE
+            ")
+            #df.to_sql('demo_quart', conn, if_exists= 'replace', index = False)
+            myrow = cursor.fetchone()
+
+            while myrow is not None: 
+                print(myrow)
+                myrow = cursor.fetchone()
+                
+                
+                
+          if conn.is_connected():
+            print('Connected to MySQL database')
+
+            cursor = conn.cursor()
+            
+            #adding date of file
+            
+            cursor.execute("ALTER TABLE demo_quart
+            ADD provider_group varchar(30)
+            ")
+            #df.to_sql('demo_quart', conn, if_exists= 'replace', index = False)
+            myrow = cursor.fetchone()
+
+            while myrow is not None: 
+                print(myrow)
+                myrow = cursor.fetchone()
+                
+                
+                
+                
+         if conn.is_connected():
+            print('Connected to MySQL database')
+
+            cursor = conn.cursor()
+            
+            #adding date of file
+            
+            cursor.execute("INSERT INTO demo_quart (DOF, provider_group
+            VALUES
+            ('11/30/2018', 'Privia Family Medicine'
+            ")
+            #df.to_sql('demo_quart', conn, if_exists= 'replace', index = False)
+            myrow = cursor.fetchone()
+
+            while myrow is not None: 
+                print(myrow)
+                myrow = cursor.fetchone()
+        
 
 
 
