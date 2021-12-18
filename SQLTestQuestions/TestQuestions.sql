@@ -40,6 +40,11 @@ or be blank if no nickname exists.
 
 **********************/
 
+SELECT A.PersonName, substr(B.PersonName,1,2) as nickname
+from Person A
+LEFT JOIN Person B on A.PersonName = B.PersonName 
+
+;
 
 
 /**********************
